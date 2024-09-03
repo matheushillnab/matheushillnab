@@ -1,0 +1,164 @@
+1) Observe o trecho de código abaixo: int INDICE = 13, SOMA = 0, K = 0;
+Enquanto K < INDICE faça { K = K + 1; SOMA = SOMA + K; }
+Imprimir(SOMA);
+Ao final do processamento, qual será o valor da variável SOMA?
+#include <iostream>
+
+int main() {
+    int INDICE = 13;
+    int SOMA = 0;
+    int K = 0;
+
+    while (K < INDICE) {
+        K = K + 1;
+        SOMA = SOMA + K;
+    }
+
+    std::cout << "O valor final de SOMA é: " << SOMA << std::endl;
+    return 0;
+}
+Valor da soma e 78
+2) Dado a sequência de Fibonacci, onde se inicia por 0 e 1 e o próximo valor sempre será a soma dos 2 valores anteriores (exemplo: 0, 1, 1, 2, 3, 5, 8, 13, 21, 34...), escreva um programa na linguagem que desejar onde, informado um número, ele calcule a sequência de Fibonacci e retorne uma mensagem avisando se o número informado pertence ou não a sequência.
+IMPORTANTE: Esse número pode ser informado através de qualquer entrada de sua preferência ou pode ser previamente definido no código;
+#include <iostream>
+using namespace std;
+
+bool pertenceFibonacci(int n) {
+    if (n == 0) return true;
+    if (n == 1) return true;
+
+    int a = 0, b = 1;
+    while (b < n) {
+        int temp = a + b;
+        a = b;
+        b = temp;
+    }
+
+    return b == n;
+}
+
+int main() {
+    int numero;
+    cout << "Digite um número para verificar se pertence à sequência de Fibonacci: ";
+    cin >> numero;
+
+    if (pertenceFibonacci(numero)) {
+        cout << numero << " pertence à sequência de Fibonacci." << endl;
+    } else {
+        cout << numero << " não pertence à sequência de Fibonacci." << endl;
+    }
+
+    return 0;
+}
+3) Dado um vetor que guarda o valor de faturamento diário de uma distribuidora, faça um programa, na linguagem que desejar, que calcule e retorne:
+• O menor valor de faturamento ocorrido em um dia do mês;
+• O maior valor de faturamento ocorrido em um dia do mês;
+• Número de dias no mês em que o valor de faturamento diário foi superior à média mensal.
+#include <iostream>
+#include <vector>
+#include <limits>
+
+using namespace std;
+
+int main() {
+    vector<double> faturamento = {1200.50, 1500.75, 1100.25, 1600.00, 1400.30, 1300.50, 1700.60, 
+                                  1250.40, 1550.20, 1150.10, 1650.80, 1350.90, 1450.00, 1750.70};
+
+    if (faturamento.empty()) {
+        cout << "O vetor de faturamento está vazio." << endl;
+        return 1;
+    }
+
+
+    double menorValor = numeric_limits<double>::max();
+    double maiorValor = numeric_limits<double>::min();
+    double soma = 0.0;
+    int diasAcimaMedia = 0;
+
+    for (double valor : faturamento) {
+        if (valor < menorValor) menorValor = valor;
+        if (valor > maiorValor) maiorValor = valor;
+        soma += valor;
+    }
+
+    double mediaMensal = soma / faturamento.size();
+
+    for (double valor : faturamento) {
+        if (valor > mediaMensal) diasAcimaMedia++;
+    }
+
+    cout << "Menor valor de faturamento: " << menorValor << endl;
+    cout << "Maior valor de faturamento: " << maiorValor << endl;
+    cout << "Número de dias com faturamento acima da média: " << diasAcimaMedia << endl;
+
+    return 0;
+}
+4) Dado o valor de faturamento mensal de uma distribuidora, detalhado por estado:
+• SP – R$67.836,43
+• RJ – R$36.678,66
+• MG – R$29.229,88
+• ES – R$27.165,48
+• Outros – R$19.849,53
+
+#include <iostream>
+#include <iomanip>
+
+using namespace std;
+
+int main() {
+    double faturamentoSP = 67836.43;
+    double faturamentoRJ = 36678.66;
+    double faturamentoMG = 29229.88;
+    double faturamentoES = 27165.48;
+    double faturamentoOutros = 19849.53;
+
+    double totalFaturamento = faturamentoSP + faturamentoRJ + faturamentoMG + faturamentoES + faturamentoOutros;
+
+    double maiorFaturamento = max({faturamentoSP, faturamentoRJ, faturamentoMG, faturamentoES, faturamentoOutros});
+    double menorFaturamento = min({faturamentoSP, faturamentoRJ, faturamentoMG, faturamentoES, faturamentoOutros});
+
+    cout << fixed << setprecision(2);  // Define a precisão dos números decimais para 2 casas
+    cout << "Total de faturamento mensal: R$ " << totalFaturamento << endl;
+    cout << "Maior valor de faturamento por estado: R$ " << maiorFaturamento << endl;
+    cout << "Menor valor de faturamento por estado: R$ " << menorFaturamento << endl;
+
+    cout << "Participação de cada estado no total:" << endl;
+    cout << "SP: " << (faturamentoSP / totalFaturamento) * 100 << "%" << endl;
+    cout << "RJ: " << (faturamentoRJ / totalFaturamento) * 100 << "%" << endl;
+    cout << "MG: " << (faturamentoMG / totalFaturamento) * 100 << "%" << endl;
+    cout << "ES: " << (faturamentoES / totalFaturamento) * 100 << "%" << endl;
+    cout << "Outros: " << (faturamentoOutros / totalFaturamento) * 100 << "%" << endl;
+
+    return 0;
+}
+5) Escreva um programa que inverta os caracteres de um string.
+
+IMPORTANTE:
+a) Essa string pode ser informada através de qualquer entrada de sua preferência ou pode ser previamente definida no código;
+b) Evite usar funções prontas, como, por exemplo, reverse;
+
+#include <iostream>
+#include <string>
+
+using namespace std;
+
+int main() {
+    string str;
+    
+    cout << "Digite a string a ser invertida: ";
+    getline(cin, str);
+
+    int n = str.length();
+    string strInvertida = str;  // Copiar a string original para a string invertida
+
+    for (int i = 0; i < n / 2; ++i) {
+        // Trocar os caracteres da posição i e n-i-1
+        char temp = strInvertida[i];
+        strInvertida[i] = strInvertida[n - i - 1];
+        strInvertida[n - i - 1] = temp;
+    }
+
+    cout << "String invertida: " << strInvertida << endl;
+
+    return 0;
+}
